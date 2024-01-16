@@ -13,17 +13,24 @@ public class Main {
             arr[i] = sc.nextInt();
         }
 
+
         for (int i = 0; i < testCase; i++) {
             int target = arr[i];
+            boolean isFirst = true;
 
-            while (true) {
-                System.out.print(target % 2);
-                target = target / 2;
-                if (target == 0 | target == 1) {
-                    break;
+            for (int j = 0; target > 0; j++) {
+
+                if (target % 2 == 1) {
+                    if (!isFirst) {
+                        System.out.print(" ");
+                    }
+                    System.out.print(j);
+                    isFirst = false;
                 }
-                System.out.println();
+
+                target = target / 2;
             }
+            System.out.println();
         }
 
         sc.close();
