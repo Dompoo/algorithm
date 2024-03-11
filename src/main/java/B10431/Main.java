@@ -17,35 +17,19 @@ public class Main {
 
             int walk = 0;
 
-            int curIndex = 1;
-            int[] line = new int[20];
-            line[0] = input[0];
-            for (int i = 1; i < 20; i++) {
-
-                boolean isShifted = false;
-                for (int j = 0; j < curIndex; j++) {
-                    if (line[j] > input[i]) {
-                        //한칸씩 미루고
-                        for (int k = curIndex; k > j; k--) {
-                            line[k] = line[k - 1];
-                        }
-                        line[j] = input[i];
-                        walk += curIndex - j;
-                        isShifted = true;
-                        break;
+            for (int i = 0; i < 20; i++) {
+                int curWalk = 0;
+                for (int j = 0; j < i; j++) {
+                    if (input[i] < input[j]) {
+                        curWalk++;
                     }
                 }
-
-                if (!isShifted) {
-                    line[curIndex] = input[i];
-                }
-                curIndex++;
+                walk += curWalk;
             }
             sb.append(testNum).append(" ").append(walk);
             if (t != test - 1) sb.append("\n");
         }
 
         System.out.println(sb);
-
     }
 }
