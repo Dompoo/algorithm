@@ -1,6 +1,6 @@
-package P258712;
+package P250137;
 
-public class Soulution {
+public class Solution {
         public int solution(String[] friends, String[] gifts) {
             int n = friends.length;
 
