@@ -2,6 +2,38 @@ import java.util.*;
 
 class Main {
 
+    public String insertionSort(int size, int[] arr) {
+        // 6
+        // 11 7 5 6 10 9
+        // 
+
+        int[] resultArr = new int[size];
+
+        for(int i = 0; i < size; i++) {
+            // arr[i]의 넣어야할 index를 찾음
+            int currElement = arr[i];
+            int insertIndex = 0;
+            for(int j = 0; j < size; j++) {
+                if(arr[j] < currElement) insertIndex++;
+            }
+            for(int k = insertIndex; k < size; k++) {
+                if(resultArr[k] == 0) {
+                    resultArr[k] = currElement;
+                    break;
+                }
+            }
+        }
+
+        String result = "";
+        for(int i = 0; i < size; i++) {
+            result += resultArr[i];
+            if(i != size - 1) {
+                result += " ";
+            }
+        }
+        return result;
+    }
+
     public String bubbleSort(int size, int[] arr) {
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
@@ -65,6 +97,6 @@ class Main {
         for(int i = 0; i < size; i++) {
             arr[i] = sc.nextInt();
         }
-        System.out.println(new Main().bubbleSort(size, arr));
+        System.out.println(new Main().insertionSort(size, arr));
     }
 }
