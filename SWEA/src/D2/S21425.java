@@ -1,9 +1,8 @@
 package D2;
 
 import java.util.Scanner;
-import java.io.FileInputStream;
 
-class P21425 {
+class S21425 {
     public static void main(String args[]) throws Exception {
         Scanner sc = new Scanner(System.in);
         int T = sc.nextInt();
