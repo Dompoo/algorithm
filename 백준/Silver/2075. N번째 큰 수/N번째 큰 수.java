@@ -1,23 +1,27 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.PriorityQueue;
 
 class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int[] arr = new int[N * N];
-        String[] inputs = null;
-        int count = 0;
+
+        PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> o2 - o1);
+
+        String[] inputs;
         for (int i = 0; i < N; i++) {
             inputs = br.readLine().split(" ");
             for (int j = 0; j < N; j++) {
-                arr[count++] = Integer.parseInt(inputs[j]);
+                queue.add(Integer.parseInt(inputs[j]));
             }
         }
 
-        Arrays.sort(arr);
+        for (int i = 0; i < N - 1; i++) {
+            queue.poll();
+        }
 
-        System.out.println(arr[N * N - N]);
+
+        System.out.println(queue.poll());
     }
 }
