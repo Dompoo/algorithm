@@ -7,20 +7,21 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
 
-        PriorityQueue<Integer> queue = new PriorityQueue<>((o1, o2) -> o2 - o1);
+        PriorityQueue<Integer> queue = new PriorityQueue<>(N);
 
         String[] inputs;
         for (int i = 0; i < N; i++) {
             inputs = br.readLine().split(" ");
             for (int j = 0; j < N; j++) {
-                queue.add(Integer.parseInt(inputs[j]));
+                int target = Integer.parseInt(inputs[j]);
+                if (queue.size() < N) {
+                    queue.add(target);
+                } else if (queue.size() == N && target > queue.peek()) {
+                    queue.poll();
+                    queue.add(target);
+                }
             }
         }
-
-        for (int i = 0; i < N - 1; i++) {
-            queue.poll();
-        }
-
 
         System.out.println(queue.poll());
     }
