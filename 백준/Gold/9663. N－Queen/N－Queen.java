@@ -1,46 +1,47 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-class Main {
+//https://www.acmicpc.net/problem/9663
+@SuppressWarnings("ALL")
+public class Main {
 
-    public static int N;
+    static boolean[] col;
+    static boolean[] leftup;
+    static boolean[] rightup;
+    static int N;
+    static int count;
 
-	public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        int[] chess = new int[N];
-        for (int i = 0; i < N; i++) {
-            chess[i] = -1;
-        }
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        col = new boolean[N];
+        leftup = new boolean[2 * N - 1];
+        rightup = new boolean[2 * N - 1];
 
-        System.out.print(dfs(chess, 0));
+        dfs(0);
+        System.out.println(count);
     }
 
-    public static int dfs(int[] chess, int row) {
-        if (N == row) {
-            return 1;
+    private static void dfs(int row) {
+        if (row == N) { // N개의 row에 모두 놓았음
+            count++;
+            return;
         }
+        for (int nextCol = 0; nextCol < N; nextCol++) {
+            int lu = row + nextCol;
+            int ru = row - nextCol + (N - 1);
 
-        int count = 0;
+            if (col[nextCol] || leftup[lu] || rightup[ru]) continue;
 
-        for (int col = 0; col < N; col++) {
-            if (isValidPosition(chess, row, col)) {
-                // i j 위치에 퀸을 둔다.
-                chess[row] = col;
-                count += dfs(chess, row + 1);
-                chess[row] = -1;
-            }
+            col[nextCol] = true;
+            leftup[lu] = true;
+            rightup[ru] = true;
+            dfs(row + 1);
+            col[nextCol] = false;
+            leftup[lu] = false;
+            rightup[ru] = false;
         }
-
-        return count;
-    }
-
-    private static boolean isValidPosition(int[] chess, int row, int col) {
-        for (int i = 0; i < row; i++) {
-            if (chess[i] == col || Math.abs(i - row) == Math.abs(chess[i] - col)) {
-                return false;
-            }
-        }
-        return true;
     }
 }
