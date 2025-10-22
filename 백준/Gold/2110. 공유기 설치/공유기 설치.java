@@ -1,46 +1,57 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
-class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] NC = br.readLine().split(" ");
-		int N = Integer.parseInt(NC[0]);
-		int C = Integer.parseInt(NC[1]);
-		int[] arr = new int[N];
-		for(int i = 0; i < N; i++) {
-			arr[i] = Integer.parseInt(br.readLine());
-		}
-		
-		Arrays.sort(arr);
-		
-		//이분탐색 시작
-		int minLen = 1;
-		int maxLen = 1_000_000_000;
-		int result = 0;
-		while(minLen <= maxLen) {
-			int middle = (minLen + maxLen) / 2;
-			//middle값으로 배치할 수 있는지 확인
-			int count = 1;
-			int lastPos = arr[0];
-			for(int i = 1; i < N; i++) {
-				if(arr[i] - lastPos >= middle) {
-					lastPos = arr[i];
-					count++;
-				}
-			}
-			
-			if(count >= C) {
-				//해당 middle로 넣기 성공, 더 빡센 조건으로 시도
-				minLen = middle + 1;
-				result = middle;
-			} else {
-				//해당 middle로 넣기 실패, 더 완화된 조건으로 시도
-				maxLen = middle - 1;
-			}
-		}
-		
-		//원하는 middle을 찾음
-		System.out.print(result);
-	}
+// https://www.acmicpc.net/problem/3079
+@SuppressWarnings("ALL")
+public class Main {
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int[] house = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            house[i] = Integer.parseInt(br.readLine());
+        }
+
+        Arrays.sort(house);
+
+        int minDiff = Integer.MAX_VALUE;
+        for (int i = 0; i < N - 1; i++) {
+            minDiff = Math.min(minDiff, house[i + 1] - house[i]);
+        }
+
+        int result = -1;
+        int left = minDiff;
+        int right = house[N - 1] - house[0];
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            int sharerCount = 1;
+            int lastShaererPos = house[0];
+            for (int i = 1; i < N; i++) {
+                if (mid <= house[i] - lastShaererPos) {
+                    lastShaererPos = house[i];
+                    sharerCount++;
+                }
+            }
+
+            if (sharerCount >= M) {
+                result = mid; // 더 많이 설치했어? 좀 더 빡세게(거리 멀게) 설치해봐
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        System.out.println(result);
+
+
+    }
 }
