@@ -36,13 +36,13 @@ public class Main {
                     deque.offerFirst(new int[]{teleportPos, curTime});
                     minTime[teleportPos] = curTime;
                 }
-                if (frontPos <= 100_000 && minTime[frontPos] > curTime + 1) {
-                    deque.offerLast(new int[]{frontPos, curTime + 1});
-                    minTime[frontPos] = curTime + 1;
-                }
                 if (backPos >= 0 && minTime[backPos] > curTime + 1) {
                     deque.offerLast(new int[]{backPos, curTime + 1});
                     minTime[backPos] = curTime + 1;
+                }
+                if (frontPos <= 100_000 && minTime[frontPos] > curTime + 1) {
+                    deque.offerLast(new int[]{frontPos, curTime + 1});
+                    minTime[frontPos] = curTime + 1;
                 }
             }
         }
